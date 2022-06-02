@@ -2,20 +2,23 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
-import java.util.List;
-import java.io.*;
+// import java.util.List;
+// import java.io.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
+// Next time: sjekke antall adjektiv i adjektivfortellingen og deretter sÃ¸rge for at det er sÃ¥ mange eller flere adjektiv Ã¥ velge fra.
 public class Adjektivfortelling {
 
 	public static void main(String[] args) 
 		throws IOException
 	{
 		Scanner scan = new Scanner(System.in);
+		//Resource leak: 'scan' is never closed. Should it be closed? 
 		scan.useDelimiter(Pattern.compile("[\\n;]+"));
-		System.out.println("Skriv inn så mange adjektiv du vil. Avslutt med ENTER.");
+		System.out.println("Skriv inn adjektivene dine. Avslutt med ENTER.");
 		String adjektiv = scan.next();
 		String[] splittet = adjektiv.split("\\s+");
 		
@@ -30,16 +33,14 @@ public class Adjektivfortelling {
 			utvalgteAdjektiv[i] = adjektivliste.get(randomNum);
 			adjektivliste.remove(randomNum);
 		}
-		String adjektivfortelling = "Du er mest kjent for å være " + utvalgteAdjektiv[0] + ". Noen ganger kan du også være ganske " + utvalgteAdjektiv[1] + ". De som sier det er " + utvalgteAdjektiv[2] + ". Du vet at du egentlig er " + utvalgteAdjektiv[3] + ". Det er alle vi " + utvalgteAdjektiv[4] + "e folkene enige om.";
-		System.out.println(adjektivfortelling);
 		
 		// Creating a path choosing file from local directory by creating an object of Path class
-        Path fortelling
-            = Path.of("C:\\Users\\eirin\\Documents\\Programmering\\javaexercises\\fortelling.txt");
- 
-        // Now calling Files.readString() method to read the file
+		String filepos = scan.next();
+		System.out.println("Write path and file to use and then ENTER: ");
+		filepos = filepos.substring(0, filepos.length()-1);
+        Path fortelling = Path.of(filepos);
+
         String str = Files.readString(fortelling);
-        
         int count = 0;
         
         while (str.contains("[adjektiv]")) {
