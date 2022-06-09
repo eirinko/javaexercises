@@ -53,9 +53,7 @@ public class AdjectiveStory {
         	str = str.replaceFirst("\\[adjective\\]", selectedAdjectives[countadj]);
         	countadj++;
         }
-
         System.out.println(str);
-
 		scan.close();
 	}
 }
